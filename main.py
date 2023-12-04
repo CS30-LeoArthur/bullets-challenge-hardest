@@ -18,21 +18,11 @@ def check_collision(object1, object2):
                 return j
     return -1
 
-def mouse_position_x():
+def mouse_position():
     pos = pygame.mouse.get_pos()
     mouse_x = pos[0]
-    return mouse_x
-
-def mouse_position_y():
-    pos = pygame.mouse.get_pos()
     mouse_y = pos[1]
-    return mouse_y
-
-def x_vector(player):
-    return mouse_position_x - player.x 
-
-def y_vector(player):
-    return mouse_position_y - player.y 
+    return mouse_x, mouse_y
 
 
 
