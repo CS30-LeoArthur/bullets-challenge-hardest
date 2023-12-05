@@ -24,6 +24,15 @@ def mouse_position():
     mouse_y = pos[1]
     return mouse_x, mouse_y
 
+def distance_calc(player):
+    run = mouse_position()[0] - player.x
+    rise = mouse_position()[1] - player.y
+    distance = math.sqrt(run**2 + rise**2)
+
+    dx = player.x + player.radius
+    dy = player.y + player.radius
+    
+
 
 
 def rectCollide(rect1, rect2):
@@ -59,11 +68,10 @@ class Circle():
         pygame.draw.ellipse(screen, self.colour, [self.x, self.y, self.width, self.height], self.line_width)
 
 class Player():
-    def __init__(self, x, y, width, height, change_x, change_y):
+    def __init__(self, x, y, radius, change_x, change_y):
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
+        self.radius = radius
         self.change_x = change_x
         self.change_y = change_y
 
@@ -95,11 +103,12 @@ class Player():
 
     def update(self):
         self.x = self.x + self.change_x
-        self.y = self.y + self.change_y
+        self.y = self.y + self.change_y  
+
     
     def draw_player(self, screen):
-        pygame.draw.ellipse(screen, WHITE, [self.x, self.y, self.width, self.height])
-        pygame.draw.rect(screen, RED, [self.x + (self.width / 2.25), self.y, self.width / 8, self.height / 2])
+        pygame.draw.circle(screen, WHITE, [self.x, self.y], self.radius)
+        pygame.draw.line(screen, RED, [self.x, self.y], [mouse_position()[0], mouse_position()[1]], 11)
 
 def main():
     # Initialize pygame
@@ -112,7 +121,7 @@ def main():
     bullets = []
 
         # Player
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, 60, 60, 0, 0)
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, 30, 0, 0)
         # Screen
     size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(size)
