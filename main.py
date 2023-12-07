@@ -28,10 +28,10 @@ def distance_calc(player):
     run = mouse_position()[0] - player.x
     rise = mouse_position()[1] - player.y
     distance = math.sqrt(run**2 + rise**2)
-
-    dx = player.x + player.radius
-    dy = player.y + player.radius
-    
+    dx = player.x + (run * player.radius / distance)
+    dy = player.y + (rise * player.radius / distance)
+    r = math.sqrt(dx**2 + dy**2)
+    return dx, dy, r
 
 
 
@@ -108,7 +108,7 @@ class Player():
     
     def draw_player(self, screen):
         pygame.draw.circle(screen, WHITE, [self.x, self.y], self.radius)
-        pygame.draw.line(screen, RED, [self.x, self.y], [mouse_position()[0], mouse_position()[1]], 11)
+        pygame.draw.line(screen, RED, [self.x, self.y], [distance_calc(self)[0], distance_calc(self)[1]], 11)
 
 def main():
     # Initialize pygame
@@ -152,7 +152,10 @@ def main():
                     player.vtstop()
             # when player clicks create a circle in the bullets list
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                bullets.append(Circle(player.x + (player.width / 2.5), player.y, 10, 10, WHITE, 0, -6, 0))
+                print(distance_calc(player)[2])
+                bullet_speed_x = 0
+                bullet_speed_y = 0
+                bullets.append(Circle(player.x, player.y, 10, 10, WHITE, bullet_speed_x, bullet_speed_y, 0))
         # Logic
         
         # make new width and height for random circles every loop
