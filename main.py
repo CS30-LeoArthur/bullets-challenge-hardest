@@ -30,8 +30,15 @@ def distance_calc(player):
     distance = math.sqrt(run**2 + rise**2)
     dx = player.x + (run * player.radius / distance)
     dy = player.y + (rise * player.radius / distance)
-    r = math.sqrt(dx**2 + dy**2)
-    return dx, dy, r
+    return dx, dy
+
+def distance_calc_bullets(player):
+    run = mouse_position()[0] - player.x
+    rise = mouse_position()[1] - player.y
+    distance = math.sqrt(run**2 + rise**2)
+    dx = run * 5 / distance
+    dy = rise * 5 / distance
+    return dx, dy
 
 
 
@@ -152,9 +159,8 @@ def main():
                     player.vtstop()
             # when player clicks create a circle in the bullets list
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                print(distance_calc(player)[2])
-                bullet_speed_x = 0
-                bullet_speed_y = 0
+                bullet_speed_x = distance_calc_bullets(player)[0]
+                bullet_speed_y = distance_calc_bullets(player)[1]
                 bullets.append(Circle(player.x, player.y, 10, 10, WHITE, bullet_speed_x, bullet_speed_y, 0))
         # Logic
         
