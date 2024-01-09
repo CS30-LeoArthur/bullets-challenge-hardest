@@ -132,7 +132,7 @@ def main():
         # Screen
     size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(size)
-    frameCount = 1
+    frameCount = 0
 
     clock = pygame.time.Clock()
     # Loop
